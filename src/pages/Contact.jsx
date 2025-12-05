@@ -1,34 +1,57 @@
 // src/pages/Contact.jsx
 import React from 'react';
 
-// Your professional business email address
-const BUSINESS_EMAIL = "contact.atlaswebco@gmail.com";
+// 🚨 PASTE YOUR UNIQUE FORMSPREE ENDPOINT HERE 🚨
+const FORMSPREE_ENDPOINT = "https://formspree.io/f/mkgdzbqr"; 
 
 function Contact() {
     return (
         <div style={containerStyle}>
-            <h2>Get In Touch</h2>
+            <h2>Send Me a Message</h2>
             <p style={descriptionStyle}>
-                I'm currently accepting new projects and always interested in connecting with potential employers or clients.
-                Please reach out to discuss how my skills in **React** and **Real-Time Data** can help your next project succeed.
+                I'm currently accepting new projects. Use the form below to quickly send me an email.
             </p>
 
-            {/* Mailto link to open the user's default email client */}
-            <a 
-                href={`mailto:${BUSINESS_EMAIL}?subject=Portfolio Inquiry`} 
-                style={buttonStyle}
+            {/* The Form Element */}
+            <form 
+                action={FORMSPREE_ENDPOINT} // Action points to your unique Formspree URL
+                method="POST" // Use the POST method to send data securely
+                style={formStyle}
             >
-                Send Me an Email 📧
-            </a>
+                <input 
+                    type="text" 
+                    name="name" 
+                    placeholder="Your Name (Required)" 
+                    required 
+                    style={inputStyle} 
+                />
+                <input 
+                    type="email" 
+                    name="_replyto" // Formspree uses this field to know where to reply
+                    placeholder="Your Email (Required)" 
+                    required 
+                    style={inputStyle} 
+                />
+                <textarea 
+                    name="message" 
+                    placeholder="Your Message..." 
+                    rows="5" 
+                    required 
+                    style={textareaStyle} 
+                />
+                <button type="submit" style={buttonStyle}>
+                    Send Message 🚀
+                </button>
+            </form>
             
             <p style={emailDisplay}>
-                Or copy my email: <strong>{BUSINESS_EMAIL}</strong>
+                Or reach me directly at: <a href="https://mail.google.com/mail/?view=cm&fs=1&to=contact.atlaswebco@gmail.com">contact.atlaswebco@gmail.com</a>
             </p>
             
             <section style={sectionStyle}>
                 <h3>Other Links</h3>
                 <ul style={listStyle}>
-                    <li><a href="https://github.com/Atlaswebco" target="_blank" rel="noopener noreferrer">My GitHub Profile</a></li>
+                    <li><a href="https://github.com/atlaswebco" target="_blank" rel="noopener noreferrer">My GitHub Profile</a></li>
                     <li><a href="/about">View My Technical Skills</a></li>
                 </ul>
             </section>
@@ -36,18 +59,21 @@ function Contact() {
     );
 }
 
-// Basic inline styles
-const containerStyle = { padding: '20px', maxWidth: '600px', margin: '0 auto', textAlign: 'center' };
+// Basic Styles
+const containerStyle = { padding: '20px', maxWidth: '500px', margin: '0 auto', textAlign: 'center' };
 const descriptionStyle = { marginBottom: '30px', fontSize: '1.1em' };
+const formStyle = { display: 'flex', flexDirection: 'column', gap: '15px' };
+const inputStyle = { padding: '12px', border: '1px solid #ccc', borderRadius: '4px', fontSize: '1em' };
+const textareaStyle = { padding: '12px', border: '1px solid #ccc', borderRadius: '4px', fontSize: '1em', resize: 'vertical' };
 const buttonStyle = {
-    display: 'inline-block',
     padding: '15px 30px',
     backgroundColor: '#61dafb',
     color: '#000',
-    textDecoration: 'none',
+    border: 'none',
     borderRadius: '8px',
     fontWeight: 'bold',
     fontSize: '1.2em',
+    cursor: 'pointer',
     transition: 'background-color 0.2s',
 };
 const emailDisplay = { marginTop: '20px', fontSize: '0.9em', color: '#555' };
