@@ -7,7 +7,7 @@ function Home() {
         <div style={{ padding: '20px', textAlign: 'center' }}>
             <h2>👋 Hello! I'm a Novice Web Developer</h2>
             <p style={{ maxWidth: '600px', margin: '15px auto 30px' }}>
-                Welcome to my portfolio showcase. I focus on building modern, responsive user interfaces and integrating them with powerful cloud services.
+                Welcome to my realtime-data transmission demo site. I focus on building modern, responsive user interfaces and integrating them with powerful cloud services.
             </p>
 
             <Link to="/demo" style={linkButtonStyle}>

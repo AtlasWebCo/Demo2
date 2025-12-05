@@ -1,24 +1,31 @@
 // src/components/MessageForm.jsx
 import React, { useState } from 'react';
-import { db } from '../firebase-config'; // Import the initialized Firestore database
+import { db } from '../firebase-config';
 import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
 
 const MessageForm = () => {
+  // 🚨 CHANGE: Default username is now an empty string
   const [text, setText] = useState('');
-  const [username, setUsername] = useState('NoviceDev');
+  const [username, setUsername] = useState(''); 
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!text.trim()) return; // Prevent empty messages
+
+    // 🚨 CHANGE: Check if BOTH text and username are provided
+    if (!text.trim() || !username.trim()) {
+        // If either is missing, the HTML 'required' attribute should stop it,
+        // but this provides a JavaScript safety net.
+        return; 
+    }
 
     try {
-      // Use the addDoc function to create a new document in the 'messages' collection
       await addDoc(collection(db, 'messages'), {
-        text: text,
-        username: username,
-        timestamp: serverTimestamp(), // Ensures all users use the same server time
+        text: text.trim(),
+        username: username.trim(),
+        timestamp: serverTimestamp(), 
       });
-      setText(''); // Clear input after submission
+      setText(''); // Clear text input after submission
+      // Note: We leave the username so the user doesn't have to retype it
     } catch (error) {
       console.error("Error adding document: ", error);
     }
@@ -30,10 +37,11 @@ const MessageForm = () => {
       <form onSubmit={handleSubmit} style={formStyle}>
         <input
           type="text"
-          placeholder="Your Name (Optional)"
+          placeholder="Your Name (Required)" // 🚨 CHANGE: Updated placeholder
           value={username}
           onChange={(e) => setUsername(e.target.value)}
           style={inputStyle}
+          required // 🚨 CHANGE: Made input required
         />
         <textarea
           placeholder="Type your live update message..."
@@ -50,7 +58,7 @@ const MessageForm = () => {
   );
 };
 
-// Basic inline styles
+// ... (Styles remain the same)
 const formContainerStyle = {
   marginBottom: '20px',
   padding: '15px',
@@ -61,5 +69,6 @@ const formStyle = { display: 'flex', flexDirection: 'column', gap: '10px' };
 const inputStyle = { padding: '8px', border: '1px solid #ddd', borderRadius: '4px' };
 const textareaStyle = { padding: '8px', border: '1px solid #ddd', borderRadius: '4px', resize: 'vertical' };
 const buttonStyle = { padding: '10px', backgroundColor: '#61dafb', color: 'black', border: 'none', borderRadius: '4px', cursor: 'pointer' };
+
 
 export default MessageForm;
